@@ -1,70 +1,65 @@
 document.addEventListener('DOMContentLoaded', ()=>{
 
 
-    fetch('http://localhost:3000/comments')
+    fetch('http://bagel-api-fis.herokuapp.com/bagels')
       .then(response => response.json())
-      .then(result => handleCommentData(result))
+      .then(result => handleData(result))
   
   
-      function handleCommentData(comments){
-        console.table(comments)
-        comments.map(comment => {
-            renderId(comment)
-            renderComment(comment.content, comment.id)
+      function handleData(bagels){
+          console.log(bagels)
+        bagels.map(bagel => {
+            renderBagel(bagel.type, bagel.id)
         })
       }
   
+
   
-      function renderId(comment){
-        console.log('renderId', comment)
-      }
-  
-      function renderComment(bananas, id){
-        const commentsContainer = document.querySelector('#commentsUl')
-        const commentContent = document.createElement('li')
-        commentContent.textContent = bananas
-        commentsContainer.appendChild(commentContent)
-        createDeleteButton(commentContent, id)
+      function renderBagel(bananas, id){
+        const bagelsContainer = document.querySelector('#bagelsUl')
+        const bagelContent = document.createElement('li')
+        bagelContent.textContent = bananas
+        bagelsContainer.appendChild(bagelContent)
+        createDeleteButton(bagelContent, id)
       }
   
   
-      function createDeleteButton(commentContent, id){
+      function createDeleteButton(bagelContent, id){
         const deleteButton = document.createElement('button')
         deleteButton.innerText = 'delete'
-        commentContent.appendChild(deleteButton)
-        deleteButton.addEventListener('click', event => deleteComment(id))
+        bagelContent.appendChild(deleteButton)
+        deleteButton.addEventListener('click', event => deleteBagel(id))
       }
   
-      function deleteComment(id){
-        console.log(id)
+      function deleteBagel(id){
         event.target.parentNode.remove()
-        fetch(`http://localhost:3000/comments/${id}`, {method:'DELETE'})
+        fetch(`http://bagel-api-fis.herokuapp.com/bagels/${id}`, {method:'DELETE'})
       }
   
   
-      const commentsForm = document.querySelector('#comments-form')
+      const bagelsForm = document.querySelector('#bagels-form')
   
-      commentsForm.addEventListener('submit', ()=>{
+      bagelsForm.addEventListener('submit', ()=>{
         event.preventDefault()
-        getUserComment(commentsForm)
+        getUserBagel(bagelsForm)
       })
   
-      function getUserComment(commentsForm){
-        const newFormData = new FormData(commentsForm)
-        const formComment = newFormData.get('comment')
-        renderComment(formComment)
-        sendUserComment(formComment)
+      function getUserBagel(bagelsForm){
+        const newFormData = new FormData(bagelsForm)
+        const formBagel = newFormData.get('bagel')
+        renderBagel(formBagel)
+        sendUserBagel(formBagel)
       }
   
   
-      function sendUserComment(content){
-        fetch('http://localhost:3000/comments', {
+      function sendUserBagel(type){
+        fetch('http://bagel-api-fis.herokuapp.com/bagels', {
           method:'POST',
           headers:{
             'Accept':'application/json',
             'Content-Type':'application/json'
           },
-          body:JSON.stringify({content})
+          body: JSON.stringify({type})
         })
       }
   
