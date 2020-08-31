@@ -1,3 +1,5 @@
+import * as BagelContainer from './Components/BagelContainer.js'
+
 document.addEventListener('DOMContentLoaded', ()=>{
 
 
@@ -9,32 +11,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
       function handleData(bagels){
           console.log(bagels)
         bagels.map(bagel => {
-            renderBagel(bagel.type, bagel.id)
+          BagelContainer.renderBagels(bagel.type, bagel.id)
         })
       }
   
 
   
-      function renderBagel(bananas, id){
-        const bagelsContainer = document.querySelector('#bagelsUl')
-        const bagelContent = document.createElement('li')
-        bagelContent.textContent = bananas
-        bagelsContainer.appendChild(bagelContent)
-        createDeleteButton(bagelContent, id)
-      }
+      // function renderBagel(bananas, id){
+      //   const bagelsContainer = document.querySelector('#bagelsUl')
+      //   const bagelContent = document.createElement('li')
+      //   bagelContent.textContent = bananas
+      //   bagelsContainer.appendChild(bagelContent)
+      //   createDeleteButton(bagelContent, id)
+      // }
   
   
-      function createDeleteButton(bagelContent, id){
-        const deleteButton = document.createElement('button')
-        deleteButton.innerText = 'delete'
-        bagelContent.appendChild(deleteButton)
-        deleteButton.addEventListener('click', event => deleteBagel(id))
-      }
+      // function createDeleteButton(bagelContent, id){
+      //   const deleteButton = document.createElement('button')
+      //   deleteButton.innerText = 'delete'
+      //   bagelContent.appendChild(deleteButton)
+      //   deleteButton.addEventListener('click', event => deleteBagel(id))
+      // }
   
-      function deleteBagel(id){
-        event.target.parentNode.remove()
-        fetch(`http://bagel-api-fis.herokuapp.com/bagels/${id}`, {method:'DELETE'})
-      }
+      // function deleteBagel(id){
+      //   event.target.parentNode.remove()
+      //   fetch(`http://bagel-api-fis.herokuapp.com/bagels/${id}`, {method:'DELETE'})
+      // }
   
   
       const bagelsForm = document.querySelector('#bagels-form')
